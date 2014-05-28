@@ -50,7 +50,17 @@ class RoleLoad(object):
 
     def load_all_roles(self, plugin_dir=None):
         if plugin_dir is None:
-            plugin_dir = os.path.join(os.getenv('HOME'), 'genastack_roles')
+            home = os.path.join(os.getenv('HOME'), 'genastack_roles')
+            opt = '/opt/genastack_roles'
+            if os.path.isdir(home):
+                plugin_dir = home
+            elif os.path.isdir(opt):
+                plugin_dir = opt
+            else:
+                raise genastack.CantContinue(
+                    'Neither %s or %s exist so you have no Roles installed.'
+                    ' Please create some roles prior to continuing.'
+                )
 
         modules = pkgutil.iter_modules(path=[plugin_dir])
         for loader, name, ispkg in modules:
