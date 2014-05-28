@@ -26,13 +26,13 @@ def executable():
     else:
         args = parser.return_args()
         debug = args.get('debug')
-
         log = logger.LogSetup(debug_logging=debug)
 
         # Load the three handlers that are used for genastack logging
         handlers = ['genastack-system', 'genastack-common', 'genastack-engine']
         for handler in handlers:
-            log.default_logger(name=handler)
+            _log = log.default_logger(name=handler)
+            _log.debug('debug loaded')
 
         method = args.get('method')
         if method is None:
