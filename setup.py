@@ -20,7 +20,6 @@ packages = [
     'genastack',
     'genastack.arguments',
     'genastack.common',
-    'genastack.roles',
     'genastack.engine'
 ]
 for mod, name, package in pkgutil.iter_modules(roles.__path__):
