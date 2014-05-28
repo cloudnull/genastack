@@ -31,8 +31,7 @@ def executable():
         # Load the three handlers that are used for genastack logging
         handlers = ['genastack-system', 'genastack-common', 'genastack-engine']
         for handler in handlers:
-            _log = log.default_logger(name=handler)
-            _log.debug('debug loaded')
+            log.default_logger(name=handler, enable_stream=True)
 
         method = args.get('method')
         if method is None:
