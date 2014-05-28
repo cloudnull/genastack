@@ -8,13 +8,11 @@
 # details (see GNU General Public License).
 # http://www.gnu.org/licenses/gpl.html
 # =============================================================================
-import pkgutil
 import sys
 
 import setuptools
 
 import genastack
-from genastack import roles
 
 packages = [
     'genastack',
@@ -22,8 +20,6 @@ packages = [
     'genastack.common',
     'genastack.engine'
 ]
-for mod, name, package in pkgutil.iter_modules(roles.__path__):
-    packages.append('genastack.roles.%s' % name)
 
 with open('requirements.txt') as f:
     required = f.read().splitlines()
