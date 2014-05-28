@@ -445,15 +445,17 @@ class EngineRunner(object):
                 self.__set_perms(inode=path, kwargs=directory)
 
     @staticmethod
-    def package_install(kwargs):
+    def _package_install(args):
         """Install of packages based on the system that has been discovered.
 
         :param kwargs: ``dict``
         """
-        installer = package_installer.PackageInstaller(
-            log_name='genastack-engine', packages_dict=kwargs
-        )
-        installer.install()
+
+        for pkgs in args:
+            installer = package_installer.PackageInstaller(
+                log_name='genastack-engine', packages_dict=pkgs
+            )
+            installer.install()
 
     def get_required(self, args, pop):
         """Populate all required roles in the required_roles ``list``.
@@ -535,10 +537,11 @@ class EngineRunner(object):
 
         for run in run_list:
             if run in self.job_dict:
+                LOG.info('Running: [ %s ]', run)
                 run_command = '_%s' % run
                 if hasattr(self, run_command):
                     action = getattr(self, run_command)
-                    action(args=self.job_dict.pop(run))
+                    action(self.job_dict.pop(run))
 
         for role in self.run_roles:
             utils.update_installed(db=self.install_db, method=role)
